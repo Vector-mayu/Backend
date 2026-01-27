@@ -29,3 +29,16 @@ app.post("/book", (req,res)=>{
 app.listen(3000, ()=>{
 	console.log("App Listening on 3000");
 })
+
+app.patch("/book", (req, res)=>{
+	res.send("Patch");
+	if(req.body.author){
+		const Book = BookStore.find(info => info.id === req.body.id);
+		Book.author = req.body.author;
+	}
+
+	if(req.body.name){
+		const changes = BookStore.find(info => info.id === req.body.id);
+		changes.name = req.body.name;
+	}
+})

@@ -20,6 +20,8 @@ const FoodMenu = [
 	{id:11, food:"Chicken Tikka", category:"non-veg", price:199}
 ];
 
+const AddTocart = [];
+
 // app.use("/food", Auth);
 
 app.get("/food", Auth, (req,res)=>{
@@ -81,6 +83,41 @@ app.put("/admin", Auth, (req, res)=>{
 	else{
 		res.status(400).send("Bad Request Mate ..")
 	}
+})
+
+app.get("/user", Auth, (req, res)=>{
+	res.status(200).send(AddTocart);
+})
+
+app.post("/user/:id", Auth, (req,res)=>{
+	const id = parseInt(req.params.id);
+
+	const item = FoodMenu.find(info => info.id === id);
+
+	if(item){
+		AddTocart.push(item);
+		res.status(200).send("Item Added Sucessfully...");
+	}
+	else{
+		res.status(404).send("Item Not Found...");
+	}
+})
+
+app.delete("/user/:id", Auth, (req,res)=>{
+	const id = parseInt(req.params.id);
+	const item = AddTocart.findIndex(info => info.id === id);
+
+	if(!AddTocart){
+		res.status(400).send("Cart Is Empty...");
+	}
+	else if(item){
+		AddTocart.splice(item,1);
+		res.status(200).send("Item Deleted Sucessfully...");
+	}
+	else{
+		res.status(404).send("Item Not Found...")
+	}
+
 })
 
 app.listen(2000, ()=>{

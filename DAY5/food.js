@@ -39,25 +39,6 @@ app.post("/admin", Auth, (req,res) =>{
     }
 });
 
-app.delete("/admin/:id", Auth, (req,res)=>{
-    const id = parseInt(req.params.id);
-    if(id){
-
-        const item = FoodMenu.findIndex(info => info.id === id);
-
-        if(item === -1){
-            res.status(404).send("Item dont exist");
-        }
-        else{
-            FoodMenu.splice(item,1);
-            res.status(200).send("Item Deleted Sucessfully...");
-        }
-    }
-    else{
-        res.status(400).send("Bad Request...")
-    }
-})
-
 app.put("/admin", Auth, (req, res)=>{
 	if(req.body.id){
 		const Item = FoodMenu.find(info => info.id === req.body.id);
@@ -83,6 +64,25 @@ app.put("/admin", Auth, (req, res)=>{
 	else{
 		res.status(400).send("Bad Request Mate ..")
 	}
+})
+
+app.delete("/admin/:id", Auth, (req,res)=>{
+    const id = parseInt(req.params.id);
+    if(id){
+
+        const item = FoodMenu.findIndex(info => info.id === id);
+
+        if(item === -1){
+            res.status(404).send("Item dont exist");
+        }
+        else{
+            FoodMenu.splice(item,1);
+            res.status(200).send("Item Deleted Sucessfully...");
+        }
+    }
+    else{
+        res.status(400).send("Bad Request...")
+    }
 })
 
 app.get("/user", Auth, (req, res)=>{

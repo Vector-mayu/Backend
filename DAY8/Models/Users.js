@@ -21,8 +21,9 @@ const userSchema = new Schema({
 		type: String,
 		// enum: ["Male", "Female", "Other"],
 		validate(value){
-			if(!["Male", "Female", "Others"].includes(value))
-				throw new Error("Invalid Gender...")
+			if(!["Male", "Female", "Others"].includes(value)){
+				throw new Error("Invalid Gender...");
+			}
 		}
 	},
 	emailID:{

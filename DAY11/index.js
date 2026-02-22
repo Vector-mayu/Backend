@@ -2,7 +2,7 @@ const express = require("express");
 const main = require("./Database");
 const User = require("./Models/Users");
 const validateuser = require("./utils/validateUser");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
 const jwt =  require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const Auth = require("./Middleware/Auth");
@@ -55,7 +55,7 @@ app.post("/login", async (req, res)=>{
 		if(!(req.body.emailID === people.emailID))
 			throw new Error("Invalid Credentails...")
 
-		const isAllowed = await bcrypt.compare(req.body.password, people.password);
+		const isAllowed = people.verifyPassword(req.body.password);
 
 		if(!isAllowed){
 			throw new Error("Invalid Credentails...");
@@ -64,7 +64,7 @@ app.post("/login", async (req, res)=>{
 		// JWT Token
 
 		// jwt.sign({PAYLOAD}, SecretKey)
-		const token = jwt.sign({_id:people._id, emailID:people.emailID}, "Mayuresh"); 
+		const token = people.getJWT();
 
 		res.cookie("token", token);
 		res.status(200).send("Login Successfull...	");

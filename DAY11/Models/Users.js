@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const {Schema} = mongoose;
+const jwt =  require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 // Step 1 :- Create Schema
 const userSchema = new Schema({
@@ -44,6 +46,17 @@ const userSchema = new Schema({
 {
 	timestamps: true,
 })
+
+// Lets Create Methods for userSchema
+userSchema.methods.getJWT = function(){
+	const ans = jwt.sign({_id: this._id, emailID: this.emailID}, "Mayuresh");
+	return ans;
+}
+
+userSchema.methods.verifyPassword = async function (userPassword){
+	const ans = await bcrypt.compare(userPassword, this.password);
+	return ans;
+}
 
 // Step 2 :- Create Model / Collection / Table / Class Create kari hai
 

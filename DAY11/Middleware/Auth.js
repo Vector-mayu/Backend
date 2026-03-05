@@ -10,9 +10,9 @@ const Auth = async (req,res,next)=>{
             throw new Error("Token Doesn't exist");
         }
 
-        const payload =  jwt.verify(token,"Mayuresh");
+        const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        // const payload =  jwt.verify(token,"Mayuresh");// Token 
 		console.log(payload);
-        // console.log(payload);
 
         const {_id} = payload;
 
@@ -26,9 +26,7 @@ const Auth = async (req,res,next)=>{
             throw new Error("User Doesn't exist");
         }
 
-        req.result = result;
-
-
+        req.result = result;// Directly pass result in req 
         next();
     }
     catch(err){

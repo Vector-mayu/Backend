@@ -7,6 +7,7 @@ const jwt =  require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const Auth = require("./Middleware/Auth");
 const app = express();
+require('dotenv').config();
 
 app.use(express.json());
 app.use(cookieParser());
@@ -99,13 +100,12 @@ app.patch("/user", Auth, async (req, res)=>{
 })
 
 
-
 // Connect DB First then Listen it
 main()
 .then( async ()=> { 
 	console.log("Successfully Connnected to DB");
 
-	app.listen(3000, ()=>{
+	app.listen(process.env.PORT, ()=>{
 		console.log("App Listening at port 3000");
 	})
 

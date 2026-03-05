@@ -49,13 +49,18 @@ const userSchema = new Schema({
 
 // Lets Create Methods for userSchema
 userSchema.methods.getJWT = function(){
-	const ans = jwt.sign({_id: this._id, emailID: this.emailID}, "Mayuresh");
+	const ans = jwt.sign({_id: this._id, emailID: this.emailID}, process.env.JWT_SECRET_KEY);
 	return ans;
 }
 
 userSchema.methods.verifyPassword = async function (userPassword){
 	const ans = await bcrypt.compare(userPassword, this.password);
 	return ans;
+}
+
+userSchema.methods.verifyJWT = function(token){
+	const ans = jwt.verify(token, process.env.JWT_SECRET_KEY);
+	 return ans;
 }
 
 // Step 2 :- Create Model / Collection / Table / Class Create kari hai

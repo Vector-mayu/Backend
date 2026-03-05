@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 async function main() {
-	await mongoose.connect("mongodb+srv://mayu_14:Mayuresh20*06@myfirstcluster.y4prmz2.mongodb.net/Instagram");
+	await mongoose.connect(process.env.DB_CONNECT_KEY);
 }
 
 module.exports = main;

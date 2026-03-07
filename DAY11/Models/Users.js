@@ -58,11 +58,6 @@ userSchema.methods.verifyPassword = async function (userPassword){
 	return ans;
 }
 
-userSchema.methods.verifyJWT = function(token){
-	const ans = jwt.verify(token, process.env.JWT_SECRET_KEY);
-	 return ans;
-}
-
 // Step 2 :- Create Model / Collection / Table / Class Create kari hai
 
 const User = mongoose.model("User", userSchema) // (name of collection, Schema)

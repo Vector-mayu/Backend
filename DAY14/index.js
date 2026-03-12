@@ -1,7 +1,8 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const main = require("./ChatBot");
-require("dotenv").config;
+
 
 app.use(express.json());
 

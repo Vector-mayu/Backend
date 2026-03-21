@@ -1,0 +1,68 @@
+*{
+  background-color: rgb(255, 255, 255)
+}
+
+.chat{
+  margin: auto;
+  height: 32rem;
+  width: 20rem;
+  background-color: rgb(175, 175, 255);
+  border: solid black 1px;
+}
+
+body{
+  text-align: center;
+}
+
+h1{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+input{
+  height: 30px;
+  /* border-radius: 20px; */
+  width: 16rem;
+  background-color: white;
+}
+
+button{
+  height: 35px;
+  width: 50px;
+  text-align: center;
+  background-color: white;
+}
+
+.recevier{
+  margin-top: 0px;
+  height: 4rem;
+  background-color: rgb(255, 255, 255);
+  width: 20rem;
+  margin:auto;
+  display: flex;
+  align-items: center;
+  border: black solid 1px;
+}
+
+.profile{
+  margin-left: 1rem;
+  height: 3rem;
+  background-color: green;
+  width: 3rem;
+  border-radius: 50%;
+}
+
+h2{
+  margin-left: 1rem;
+  color: black;
+}
+
+.main{
+  display: flex;
+  justify-content: center;
+}
+
+.sender-field{
+  position: absolute;
+  bottom: 2.6rem;
+}

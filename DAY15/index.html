@@ -6,24 +6,90 @@
   <title>Chat App</title>
   <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
-	<h1>WhatsApp</h1>
 
-	<div class="recevier">
-		<img class="profile" src="https://img.freepik.com/premium-vector/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-vector-illustration_561158-3467.jpg?semt=ais_hybrid&w=740&q=80" alt="">
-		<h2>Shreyash</h2>
-	</div>
-
-	<div class="main">
-		<img class="chat" src="https://wallpapers.com/images/hd/whatsapp-chat-background-fb34cc4b2hg9lmix.jpg" alt="">
-		<div class="sender-field">
-			<input type="text" placeholder="Message">
-			<button>Send</button>
+	<div class="room">
+		<h3>Enter Room ID</h3>
+		<input type="text" class="roomID" id="roomID">
+		<div>
+			<button onclick="joinRoom()" class="roomButton">Join Room</button>
 		</div>
 	</div>
-	<!-- <div class="chatter">
-		<input type="text" placeholder="Message">
-		<button>Send</button>
-	</div> -->
+	
+
+	<div class="phone">
+
+		<!-- Receiver -->
+		<div class="receiver">
+		<img class="profile" src="https://img.freepik.com/premium-vector/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-vector-illustration_561158-3467.jpg">
+		<h3>Shreyash</h3>
+		</div>
+
+		<!-- Messages -->
+		<div id="messageDisplay" class="messages"></div>
+
+		<!-- Input -->
+		<div class="sender-field">
+		<input id="message" type="text" placeholder="Message">
+		<button onclick="sendMessage()">Send</button>
+		</div>
+
+	</div>
+
+  <!-- Socket.IO -->
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script>
+    const socket = io();
+
+    const messageBox = document.getElementById('messageDisplay');
+    const messageInput = document.getElementById('message');
+	const roomNumber = document.getElementById('roomID');
+
+    function sendMessage() {
+      const msg = messageInput.value;
+
+      if (msg.trim() === "") return;
+
+      // Send to server
+      socket.emit('message', msg);
+
+      // Show YOUR message (right side)
+      const element = document.createElement('div');
+      element.textContent = msg;
+      element.classList.add("message", "sent");
+
+      messageBox.appendChild(element);
+      messageBox.scrollTop = messageBox.scrollHeight;
+
+      messageInput.value = "";
+    }
+
+    // Receive OTHER messages (left side)
+    socket.on('new-message', (data) => {
+      const element = document.createElement('div');
+      element.textContent = data;
+      element.classList.add("message", "received");
+
+      messageBox.appendChild(element);
+      messageBox.scrollTop = messageBox.scrollHeight;
+    });
+
+    // Enter key support
+    messageInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    });
+  
+	function joinRoom(){
+		const room = roomNumber.value;
+
+		socket.emit('join-room', (room));
+	}
+ 
+ </script>
+
 </body>
 </html>
